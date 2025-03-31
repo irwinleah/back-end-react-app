@@ -14,6 +14,9 @@ const router = express.Router();
     }
 });
 
+
+
+
 // READ - GET - /videos
 router.get('/', async (req, res) => {
     try {
@@ -23,6 +26,9 @@ router.get('/', async (req, res) => {
         res.status(500).json({ err: err.message });
     }
 });
+
+
+
 
 // READ - GET - /videos/:videoId
 router.get('/:videoId', async (req, res) => {
@@ -42,6 +48,9 @@ router.get('/:videoId', async (req, res) => {
     }
 });
 
+
+
+
 // DELETE - DELETE - /videos/:videoId
 router.delete('/:videoId', async (req, res) => {
     try {
@@ -60,11 +69,29 @@ router.delete('/:videoId', async (req, res) => {
     }
 });
 
+
+
+
 // UPDATE - PUT - /videos/:videoId
 router.put('/:videoId', async (req, res) => {
-    res.json({ message: `Update route with the param ${req.params.videoId}` });
+    try {
+        const updatedVideo = await Video.findByIdAndUpdate(req.params.videoId, req.body, {
+            new: true,
+        });
+        if (!updatedVideo) {
+            res.status(404);
+            throw new Error('Video not found.');
+        }
+        res.status(200).json(updatedVideo);
+    } catch (err) {
+        if (res.statusCode === 404) {
+            res.json({ err: err.message })
+        } else {
+            res.status(500).json({ err: err.message })
+        }
+    }
 
-})
+});
 
 
 
