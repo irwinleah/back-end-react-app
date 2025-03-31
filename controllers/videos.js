@@ -30,7 +30,25 @@ router.get('/:videoId', async (req, res) => {
         const featuredVideo = await Video.findById(req.params.videoId);
         if (!featuredVideo) {
             res.status(404);
-            throw new Error('Pet not found.');
+            throw new Error('Video not found.');
+        }
+        res.status(200).json(featuredVideo);
+    } catch (err) {
+        if (res.statusCode === 404) {
+            res.json({ err: err.message });
+        } else {
+            res.status(500).json({ err: err.message });
+        }
+    }
+});
+
+// DELETE - DELETE - /videos/:videoId
+router.delete('/:videoId', async (req, res) => {
+    try {
+        const featuredVideo = await Video.findByIdAndDelete(req.params.videoId);
+        if (!featuredVideo) {
+            res.status(404);
+            throw new Error('Video not found.');
         }
         res.status(200).json(featuredVideo);
     } catch (err) {
