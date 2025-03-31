@@ -4,10 +4,7 @@ const router = express.Router();
 
 // write your routes/controller functions here
 
-// router.post('/', async (req, res) => {
-//     // Add a message to test the route
-//     res.json({ message: 'Create Route' });
-//   });
+// CREATE - POST - /videos
   router.post('/', async (req, res) => {
     try {
         const createdVideo = await Video.create(req.body);
@@ -16,6 +13,12 @@ const router = express.Router();
         res.status(500).json({ err: err.message });
     }
 });
+
+// READ - GET - /videos
+router.get('/', async (req, res) => {
+    res.json({ message: 'Index Route' });
+});
+
 
 
 
