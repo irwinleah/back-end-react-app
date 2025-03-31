@@ -16,7 +16,17 @@ const router = express.Router();
 
 // READ - GET - /videos
 router.get('/', async (req, res) => {
-    res.json({ message: 'Index Route' });
+    try {
+        const featuredVideos = await Video.find();
+        res.status(200).json(featuredVideos);
+    } catch (err) {
+        res.status(500).json({ err: err.message });
+    }
+});
+
+// READ - GET - /videos/:videoId
+router.get('/:videoId', async (req, res) => {
+    res.json({ message: `Show route with the param ${req.params.videoId}` });
 });
 
 
