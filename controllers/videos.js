@@ -60,6 +60,12 @@ router.delete('/:videoId', async (req, res) => {
     }
 });
 
+// UPDATE - PUT - /videos/:videoId
+router.put('/:videoId', async (req, res) => {
+    res.json({ message: `Update route with the param ${req.params.videoId}` });
+
+})
+
 
 
 
